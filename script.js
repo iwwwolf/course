@@ -1,7 +1,6 @@
 'use strict';
 
-let money = +prompt('Ваш бюджет на месяц?', ''),
-  time = prompt('Введите дату в формате YYYY-MM-DD', '');
+let money, time;
 
 let appData = {
   budget: money,
@@ -11,6 +10,18 @@ let appData = {
   income: [],
   savings: false
 };
+
+function getBudget() {
+  money = +prompt('Ваш бюджет на месяц?', ''),
+  time = prompt('Введите дату в формате YYYY-MM-DD', '');
+
+  while(isNaN(money) || money == '' || money == null) {
+    money = +prompt('Ваш бюджет на месяц?', '');
+  }
+  return money;
+}
+
+start();
 
 function getExpense() {
   let a = prompt('Введите обязательную статью расходов в этом месяце', '');
@@ -39,15 +50,15 @@ function getExpensePrice() {
 function addExpense() {
   let expense = getExpense(),
     expensePrice = getExpensePrice();
-    
+
   appData.expenses[expense] = expensePrice;
 }
 
 for (let i = 0; i < 2; i++) {
-  addExpense();
+  //addExpense();
 }
 
-appData.moneyPerDay = appData.budget / 30;
+appData.moneyPerDay = (appData.budget / 30).toFixed();
 
 alert('Ежедневный бюджет: ' + appData.moneyPerDay);
 
@@ -59,5 +70,5 @@ if (appData.moneyPerDay < 100) {
   console.log('Высокий уровень достатка');
 } else {
   console.log('Произошла ошибка');
-
-}
+  
+} 
